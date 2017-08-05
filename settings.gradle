@@ -1,1 +1,11 @@
-include 'desktop', 'android', 'ios', 'html', 'core'
+import com.github.dwursteisen.libgdx.IsAndroidSdk
+
+include 'desktop', 'core'
+
+IsAndroidSdk.forceDetectionTo = false
+if(IsAndroidSdk.isDetected()) {
+    include 'android'
+}
+
+
+includeBuild "../libgdx-addons"
