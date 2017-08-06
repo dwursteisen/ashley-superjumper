@@ -6,6 +6,7 @@ import com.badlogic.gdx.math.MathUtils
 import com.badlogic.gdx.math.Vector2
 import com.github.dwursteisen.libgdx.ashley.StateComponent
 import com.github.dwursteisen.libgdx.ashley.createComponent
+import com.github.dwursteisen.libgdx.ashley.createComponentWith
 import com.siondream.superjumper.components.*
 import com.siondream.superjumper.systems.RenderingSystem
 import java.util.*
@@ -63,25 +64,28 @@ class World(private val engine: PooledEngine) {
     private fun createBob(): Entity {
         val entity = engine.createEntity()
 
-        val animation: AnimationComponent = engine.createComponent()
+        val animation: AnimationComponent = engine.createComponentWith {
+            animations.put(BobComponent.STATE_FALL, Assets.bobFall)
+            animations.put(BobComponent.STATE_HIT, Assets.bobHit)
+            animations.put(BobComponent.STATE_JUMP, Assets.bobJump)
+        }
+
         val bob: BobComponent = engine.createComponent()
-        val bounds: BoundsComponent = engine.createComponent()
+
+        val bounds: BoundsComponent = engine.createComponentWith {
+            bounds.width = BobComponent.WIDTH
+            bounds.height = BobComponent.HEIGHT
+        }
         val gravity: GravityComponent = engine.createComponent()
         val movement: MovementComponent = engine.createComponent()
-        val position: TransformComponent = engine.createComponent()
-        val state: StateComponent = engine.createComponent()
+        val position: TransformComponent = engine.createComponentWith {
+            pos.set(5.0f, 1.0f, 0.0f)
+        }
+        val state: StateComponent = engine.createComponentWith {
+            set(BobComponent.STATE_JUMP)
+        }
+
         val texture: TextureComponent = engine.createComponent()
-
-        animation.animations.put(BobComponent.STATE_FALL, Assets.bobFall)
-        animation.animations.put(BobComponent.STATE_HIT, Assets.bobHit)
-        animation.animations.put(BobComponent.STATE_JUMP, Assets.bobJump)
-
-        bounds.bounds.width = BobComponent.WIDTH
-        bounds.bounds.height = BobComponent.HEIGHT
-
-        position.pos.set(5.0f, 1.0f, 0.0f)
-
-        state.set(BobComponent.STATE_JUMP)
 
         entity.add(animation)
         entity.add(bob)
@@ -100,28 +104,36 @@ class World(private val engine: PooledEngine) {
     private fun createPlatform(type: Int, x: Float, y: Float) {
         val entity = Entity()//engine.createEntity();
 
-        val animation: AnimationComponent = engine.createComponent()
-        val platform: PlatformComponent = engine.createComponent()
-        val bounds: BoundsComponent = engine.createComponent()
-        val movement: MovementComponent = engine.createComponent()
-        val position: TransformComponent = engine.createComponent()
-        val state: StateComponent = engine.createComponent()
-        val texture: TextureComponent = engine.createComponent()
+        val animation: AnimationComponent = engine.createComponentWith {
+            animations.put(PlatformComponent.STATE_NORMAL, Assets.platform)
+            animations.put(PlatformComponent.STATE_PULVERIZING, Assets.breakingPlatform)
 
-        animation.animations.put(PlatformComponent.STATE_NORMAL, Assets.platform)
-        animation.animations.put(PlatformComponent.STATE_PULVERIZING, Assets.breakingPlatform)
-
-        bounds.bounds.width = PlatformComponent.WIDTH
-        bounds.bounds.height = PlatformComponent.HEIGHT
-
-        position.pos.set(x, y, 1.0f)
-
-        state.set(PlatformComponent.STATE_NORMAL)
-
-        platform.type = type
-        if (type == PlatformComponent.TYPE_MOVING) {
-            movement.velocity.x = if (rand.nextBoolean()) PlatformComponent.VELOCITY else -PlatformComponent.VELOCITY
         }
+
+        val platform: PlatformComponent = engine.createComponentWith {
+            this.type = type
+        }
+
+        val bounds: BoundsComponent = engine.createComponentWith {
+            bounds.width = PlatformComponent.WIDTH
+            bounds.height = PlatformComponent.HEIGHT
+        }
+
+        val movement: MovementComponent = engine.createComponentWith {
+            if (type == PlatformComponent.TYPE_MOVING) {
+                velocity.x = if (rand.nextBoolean()) PlatformComponent.VELOCITY else -PlatformComponent.VELOCITY
+            }
+        }
+
+        val position: TransformComponent = engine.createComponentWith {
+            pos.set(x, y, 1.0f)
+        }
+
+        val state: StateComponent = engine.createComponentWith {
+            set(PlatformComponent.STATE_NORMAL)
+        }
+
+        val texture: TextureComponent = engine.createComponent()
 
         entity.add(animation)
         entity.add(platform)
