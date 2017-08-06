@@ -18,18 +18,44 @@ package com.siondream.superjumper;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class SuperJumper extends Game {
 	// used by all screens
 	public SpriteBatch batcher;
-	
+
+	private final AssetManager assets = new AssetManager();
+
 	@Override
 	public void create () {
 		batcher = new SpriteBatch();
 		Settings.load();
-		Assets.load();
+
+		assets.load("data/background.png", Texture.class);
+		assets.load("data/items.png", Texture.class);
+		assets.load("data/music.mp3", Music.class);
+
+		assets.load("data/music.mp3", Music.class);
+		assets.load("data/jump.wav", Sound.class);
+		assets.load("data/highjump.wav", Sound.class);
+		assets.load("data/hit.wav", Sound.class);
+		assets.load("data/coin.wav", Sound.class);
+		assets.load("data/click.wav", Sound.class);
+
+		assets.finishLoading();
+		assets.load("data/help1.png", Texture.class);
+		assets.load("data/help2.png", Texture.class);
+		assets.load("data/help3.png", Texture.class);
+		assets.load("data/help4.png", Texture.class);
+		assets.load("data/help5.png", Texture.class);
+
+		Assets.load(assets);
 		setScreen(new MainMenuScreen(this));
 	}
 	

@@ -21,11 +21,11 @@ import com.badlogic.ashley.core.Engine;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
+import com.github.dwursteisen.libgdx.ashley.StateComponent;
 import com.siondream.superjumper.World;
 import com.siondream.superjumper.components.MovementComponent;
 import com.siondream.superjumper.components.PlatformComponent;
 import com.siondream.superjumper.components.TransformComponent;
-import com.siondream.superjumper.components.StateComponent;
 
 public class PlatformSystem extends IteratingSystem {
 	private static final Family family = Family.all(PlatformComponent.class,
