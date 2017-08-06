@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.Align;
+import com.github.dwursteisen.superjumper.Assets;
 import com.github.dwursteisen.superjumper.SuperJumper;
 
 public class WinScreen extends ScreenAdapter {

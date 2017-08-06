@@ -110,6 +110,7 @@ project(":core") {
         compile "com.badlogicgames.gdx:gdx:$gdxVersion"
         compile "com.badlogicgames.ashley:ashley:$ashleyVersion"
         compile("com.github.dwursteisen.libgdx:ashley-addons:1.0.0-SNAPSHOT")
+        compile("com.github.dwursteisen.libgdx:libgdx:1.0.0-SNAPSHOT")
     }
 }
 

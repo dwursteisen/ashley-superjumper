@@ -21,6 +21,7 @@ import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.github.dwursteisen.libgdx.ashley.StateComponent;
+import com.github.dwursteisen.superjumper.Assets;
 import com.siondream.superjumper.components.*;
 import com.siondream.superjumper.systems.RenderingSystem;
 
