@@ -16,25 +16,13 @@
 
 package com.siondream.superjumper.systems;
 
-import java.util.Random;
-
-import com.badlogic.ashley.core.ComponentMapper;
-import com.badlogic.ashley.core.Engine;
-import com.badlogic.ashley.core.Entity;
-import com.badlogic.ashley.core.EntitySystem;
-import com.badlogic.ashley.core.Family;
+import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.github.dwursteisen.libgdx.ashley.StateComponent;
 import com.siondream.superjumper.World;
-import com.siondream.superjumper.components.BobComponent;
-import com.siondream.superjumper.components.BoundsComponent;
-import com.siondream.superjumper.components.CastleComponent;
-import com.siondream.superjumper.components.CoinComponent;
-import com.siondream.superjumper.components.MovementComponent;
-import com.siondream.superjumper.components.PlatformComponent;
-import com.siondream.superjumper.components.TransformComponent;
-import com.siondream.superjumper.components.SpringComponent;
-import com.siondream.superjumper.components.SquirrelComponent;
+import com.siondream.superjumper.components.*;
+
+import java.util.Random;
 
 public class CollisionSystem extends EntitySystem {
 	private ComponentMapper<BoundsComponent> bm;

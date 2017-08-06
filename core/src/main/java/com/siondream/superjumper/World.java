@@ -16,28 +16,15 @@
 
 package com.siondream.superjumper;
 
-import java.util.Random;
-
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.github.dwursteisen.libgdx.ashley.StateComponent;
-import com.siondream.superjumper.components.AnimationComponent;
-import com.siondream.superjumper.components.BackgroundComponent;
-import com.siondream.superjumper.components.BobComponent;
-import com.siondream.superjumper.components.BoundsComponent;
-import com.siondream.superjumper.components.CameraComponent;
-import com.siondream.superjumper.components.CastleComponent;
-import com.siondream.superjumper.components.CoinComponent;
-import com.siondream.superjumper.components.GravityComponent;
-import com.siondream.superjumper.components.MovementComponent;
-import com.siondream.superjumper.components.PlatformComponent;
-import com.siondream.superjumper.components.SpringComponent;
-import com.siondream.superjumper.components.SquirrelComponent;
-import com.siondream.superjumper.components.TransformComponent;
-import com.siondream.superjumper.components.TextureComponent;
+import com.siondream.superjumper.components.*;
 import com.siondream.superjumper.systems.RenderingSystem;
+
+import java.util.Random;
 
 public class World {
 	public static final float WORLD_WIDTH = 10;

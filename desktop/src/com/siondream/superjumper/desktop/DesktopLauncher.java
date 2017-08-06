@@ -2,7 +2,7 @@ package com.siondream.superjumper.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.siondream.superjumper.SuperJumper;
+import com.github.dwursteisen.superjumper.SuperJumper;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

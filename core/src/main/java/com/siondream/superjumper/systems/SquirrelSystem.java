@@ -22,8 +22,8 @@ import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.siondream.superjumper.World;
 import com.siondream.superjumper.components.MovementComponent;
-import com.siondream.superjumper.components.TransformComponent;
 import com.siondream.superjumper.components.SquirrelComponent;
+import com.siondream.superjumper.components.TransformComponent;
 
 public class SquirrelSystem extends IteratingSystem {
 

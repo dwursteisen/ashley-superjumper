@@ -26,18 +26,9 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.github.dwursteisen.libgdx.ashley.StateSystem;
-import com.siondream.superjumper.systems.AnimationSystem;
-import com.siondream.superjumper.systems.BackgroundSystem;
-import com.siondream.superjumper.systems.BobSystem;
-import com.siondream.superjumper.systems.BoundsSystem;
-import com.siondream.superjumper.systems.CameraSystem;
-import com.siondream.superjumper.systems.CollisionSystem;
+import com.github.dwursteisen.superjumper.SuperJumper;
+import com.siondream.superjumper.systems.*;
 import com.siondream.superjumper.systems.CollisionSystem.CollisionListener;
-import com.siondream.superjumper.systems.GravitySystem;
-import com.siondream.superjumper.systems.MovementSystem;
-import com.siondream.superjumper.systems.PlatformSystem;
-import com.siondream.superjumper.systems.RenderingSystem;
-import com.siondream.superjumper.systems.SquirrelSystem;
 
 public class GameScreen extends ScreenAdapter {
 	static final int GAME_READY = 0;

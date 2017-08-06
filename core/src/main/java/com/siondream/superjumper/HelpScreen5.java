@@ -20,43 +20,39 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.github.dwursteisen.superjumper.SuperJumper;
 
-public class HighscoresScreen extends ScreenAdapter {
+public class HelpScreen5 extends ScreenAdapter {
 	SuperJumper game;
-	OrthographicCamera guiCam;
-	Rectangle backBounds;
-	Vector3 touchPoint;
-	String[] highScores;
-	float xOffset = 0;
-	private GlyphLayout layout = new GlyphLayout();
 
-	public HighscoresScreen (SuperJumper game) {
+	OrthographicCamera guiCam;
+	Rectangle nextBounds;
+	Vector3 touchPoint;
+	Texture helpImage;
+	TextureRegion helpRegion;
+
+	public HelpScreen5 (SuperJumper game) {
 		this.game = game;
 
 		guiCam = new OrthographicCamera(320, 480);
 		guiCam.position.set(320 / 2, 480 / 2, 0);
-		backBounds = new Rectangle(0, 0, 64, 64);
+		nextBounds = new Rectangle(320 - 64, 0, 64, 64);
 		touchPoint = new Vector3();
-		highScores = new String[5];
-		for (int i = 0; i < 5; i++) {
-			highScores[i] = i + 1 + ". " + Settings.highscores[i];
-			layout.setText(Assets.font, highScores[i]);
-			xOffset = Math.max(layout.width, xOffset);
-		}
-		xOffset = 160 - xOffset / 2 + Assets.font.getSpaceWidth() / 2;
+		helpImage = Assets.loadTexture("data/help5.png");
+		helpRegion = new TextureRegion(helpImage, 0, 0, 320, 480);
 	}
 
 	public void update () {
 		if (Gdx.input.justTouched()) {
 			guiCam.unproject(touchPoint.set(Gdx.input.getX(), Gdx.input.getY(), 0));
 
-			if (backBounds.contains(touchPoint.x, touchPoint.y)) {
+			if (nextBounds.contains(touchPoint.x, touchPoint.y)) {
 				Assets.playSound(Assets.clickSound);
 				game.setScreen(new MainMenuScreen(game));
-				return;
 			}
 		}
 	}
@@ -69,26 +65,25 @@ public class HighscoresScreen extends ScreenAdapter {
 		game.batcher.setProjectionMatrix(guiCam.combined);
 		game.batcher.disableBlending();
 		game.batcher.begin();
-		game.batcher.draw(Assets.backgroundRegion, 0, 0, 320, 480);
+		game.batcher.draw(helpRegion, 0, 0, 320, 480);
 		game.batcher.end();
 
 		game.batcher.enableBlending();
 		game.batcher.begin();
-		game.batcher.draw(Assets.highScoresRegion, 10, 360 - 16, 300, 33);
-
-		float y = 230;
-		for (int i = 4; i >= 0; i--) {
-			Assets.font.draw(game.batcher, highScores[i], xOffset, y);
-			y += Assets.font.getLineHeight();
-		}
-
-		game.batcher.draw(Assets.arrow, 0, 0, 64, 64);
+		game.batcher.draw(Assets.arrow, 320, 0, -64, 64);
 		game.batcher.end();
+
+		gl.glDisable(GL20.GL_BLEND);
 	}
 
 	@Override
 	public void render (float delta) {
-		update();
 		draw();
+		update();
+	}
+
+	@Override
+	public void hide () {
+		helpImage.dispose();
 	}
 }

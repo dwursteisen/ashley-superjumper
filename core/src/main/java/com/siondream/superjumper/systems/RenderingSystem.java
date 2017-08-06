@@ -16,8 +16,6 @@
 
 package com.siondream.superjumper.systems;
 
-import java.util.Comparator;
-
 import com.badlogic.ashley.core.ComponentMapper;
 import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
@@ -26,8 +24,10 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.utils.Array;
-import com.siondream.superjumper.components.TransformComponent;
 import com.siondream.superjumper.components.TextureComponent;
+import com.siondream.superjumper.components.TransformComponent;
+
+import java.util.Comparator;
 
 public class RenderingSystem extends IteratingSystem {
 	static final float FRUSTUM_WIDTH = 10;
