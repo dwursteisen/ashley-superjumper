@@ -24,6 +24,7 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.github.dwursteisen.superjumper.Assets;
+import com.github.dwursteisen.superjumper.Settings;
 import com.github.dwursteisen.superjumper.SuperJumper;
 
 public class HighscoresScreen extends ScreenAdapter {

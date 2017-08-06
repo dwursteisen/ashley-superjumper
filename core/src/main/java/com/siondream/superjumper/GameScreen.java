@@ -27,6 +27,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.github.dwursteisen.libgdx.ashley.StateSystem;
 import com.github.dwursteisen.superjumper.Assets;
+import com.github.dwursteisen.superjumper.Settings;
 import com.github.dwursteisen.superjumper.SuperJumper;
 import com.siondream.superjumper.systems.*;
 import com.siondream.superjumper.systems.CollisionSystem.CollisionListener;
