@@ -21,7 +21,7 @@ import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.Family;
 import com.badlogic.ashley.systems.IteratingSystem;
 import com.github.dwursteisen.libgdx.ashley.StateComponent;
-import com.siondream.superjumper.World;
+import com.github.dwursteisen.superjumper.World;
 import com.siondream.superjumper.components.BobComponent;
 import com.siondream.superjumper.components.MovementComponent;
 import com.siondream.superjumper.components.TransformComponent;

@@ -19,7 +19,7 @@ package com.siondream.superjumper.systems;
 import com.badlogic.ashley.core.*;
 import com.badlogic.ashley.utils.ImmutableArray;
 import com.github.dwursteisen.libgdx.ashley.StateComponent;
-import com.siondream.superjumper.World;
+import com.github.dwursteisen.superjumper.World;
 import com.siondream.superjumper.components.*;
 
 import java.util.Random;
