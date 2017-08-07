@@ -25,11 +25,13 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
+import com.github.dwursteisen.libgdx.ashley.EventBus;
 import com.github.dwursteisen.libgdx.ashley.StateSystem;
 import com.github.dwursteisen.superjumper.Assets;
 import com.github.dwursteisen.superjumper.Settings;
 import com.github.dwursteisen.superjumper.SuperJumper;
 import com.github.dwursteisen.superjumper.World;
+import com.github.dwursteisen.superjumper.systems.PlatformSystem;
 import com.siondream.superjumper.systems.*;
 import com.siondream.superjumper.systems.CollisionSystem.CollisionListener;
 
@@ -53,6 +55,8 @@ public class GameScreen extends ScreenAdapter {
 	String scoreString;
 	
 	PooledEngine engine;
+
+	EventBus eventBus;
 	private GlyphLayout layout = new GlyphLayout();
 	
 	private int state;
@@ -89,10 +93,13 @@ public class GameScreen extends ScreenAdapter {
 		engine = new PooledEngine();
 		
 		world = new World(engine);
+
+		eventBus = new EventBus();
 		
 		engine.addSystem(new BobSystem(world));
 		engine.addSystem(new SquirrelSystem());
-		engine.addSystem(new PlatformSystem());
+		//engine.addSystem(new PlatformSystem());
+		engine.addSystem(new PlatformSystem(eventBus));
 		engine.addSystem(new CameraSystem());
 		engine.addSystem(new BackgroundSystem());
 		engine.addSystem(new GravitySystem());
@@ -100,7 +107,7 @@ public class GameScreen extends ScreenAdapter {
 		engine.addSystem(new BoundsSystem());
 		engine.addSystem(new StateSystem());
 		engine.addSystem(new AnimationSystem());
-		engine.addSystem(new CollisionSystem(world, collisionListener));
+		engine.addSystem(new CollisionSystem(world, collisionListener, eventBus));
 		engine.addSystem(new RenderingSystem(game.batcher));
 		
 		engine.getSystem(BackgroundSystem.class).setCamera(engine.getSystem(RenderingSystem.class).getCamera());
@@ -120,6 +127,7 @@ public class GameScreen extends ScreenAdapter {
 		if (deltaTime > 0.1f) deltaTime = 0.1f;
 
 		engine.update(deltaTime);
+		eventBus.update(deltaTime);
 		
 		switch (state) {
 		case GAME_READY:
