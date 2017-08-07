@@ -26,15 +26,14 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector3;
 import com.github.dwursteisen.libgdx.ashley.EventBus;
+import com.github.dwursteisen.libgdx.ashley.EventData;
+import com.github.dwursteisen.libgdx.ashley.EventListener;
 import com.github.dwursteisen.libgdx.ashley.StateSystem;
-import com.github.dwursteisen.superjumper.Assets;
-import com.github.dwursteisen.superjumper.Settings;
-import com.github.dwursteisen.superjumper.SuperJumper;
-import com.github.dwursteisen.superjumper.World;
+import com.github.dwursteisen.superjumper.*;
 import com.github.dwursteisen.superjumper.systems.*;
 import com.siondream.superjumper.systems.CollisionSystem;
-import com.siondream.superjumper.systems.CollisionSystem.CollisionListener;
 import com.siondream.superjumper.systems.RenderingSystem;
+import org.jetbrains.annotations.NotNull;
 
 public class GameScreen extends ScreenAdapter {
 	static final int GAME_READY = 0;
@@ -48,7 +47,6 @@ public class GameScreen extends ScreenAdapter {
 	OrthographicCamera guiCam;
 	Vector3 touchPoint;
 	World world;
-	CollisionListener collisionListener;
 	Rectangle pauseBounds;
 	Rectangle resumeBounds;
 	Rectangle quitBounds;
@@ -69,33 +67,27 @@ public class GameScreen extends ScreenAdapter {
 		guiCam = new OrthographicCamera(320, 480);
 		guiCam.position.set(320 / 2, 480 / 2, 0);
 		touchPoint = new Vector3();
-		collisionListener = new CollisionListener() {
-			@Override
-			public void jump () {
-				Assets.playSound(Assets.jumpSound);
-			}
 
-			@Override
-			public void highJump () {
-				Assets.playSound(Assets.highJumpSound);
-			}
-
-			@Override
-			public void hit () {
-				Assets.playSound(Assets.hitSound);
-			}
-
-			@Override
-			public void coin () {
-				Assets.playSound(Assets.coinSound);
-			}
-		};
 		
 		engine = new PooledEngine();
 		
 		world = new World(engine);
 
 		eventBus = new EventBus();
+		eventBus.register(new EventListener() {
+			@Override
+			public void onEvent(int event, @NotNull EventData eventData) {
+				if (event == GameEvents.HIT_COIN) {
+					Assets.playSound(Assets.coinSound);
+				} else if (event == GameEvents.HIT_PLATFORM) {
+					Assets.playSound(Assets.jumpSound);
+				} else if (event == GameEvents.HIT_SPRING) {
+					Assets.playSound(Assets.highJumpSound);
+				} else if (event == GameEvents.HIT_SQUIRREL) {
+					Assets.playSound(Assets.hitSound);
+				}
+			}
+		}, GameEvents.HIT_COIN, GameEvents.HIT_PLATFORM, GameEvents.HIT_SPRING, GameEvents.HIT_SQUIRREL);
 
 		engine.addSystem(new BobSystem(world, eventBus));
 		engine.addSystem(new SquirrelSystem());
@@ -107,7 +99,7 @@ public class GameScreen extends ScreenAdapter {
 		engine.addSystem(new BoundsSystem());
 		engine.addSystem(new StateSystem());
 		engine.addSystem(new AnimationSystem());
-		engine.addSystem(new CollisionSystem(world, collisionListener, eventBus));
+		engine.addSystem(new CollisionSystem(world, eventBus));
 		engine.addSystem(new RenderingSystem(game.batcher));
 		
 		engine.getSystem(BackgroundSystem.class).setCamera(engine.getSystem(RenderingSystem.class).getCamera());

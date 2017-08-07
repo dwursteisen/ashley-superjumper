@@ -33,19 +33,8 @@ public class CollisionSystem extends EntitySystem {
     private ComponentMapper<StateComponent> sm;
     private ComponentMapper<TransformComponent> tm;
 
-    public static interface CollisionListener {
-        public void jump();
-
-        public void highJump();
-
-        public void hit();
-
-        public void coin();
-    }
-
     private Engine engine;
     private World world;
-    private CollisionListener listener;
     private Random rand = new Random();
     private ImmutableArray<Entity> bobs;
     private ImmutableArray<Entity> coins;
@@ -56,9 +45,8 @@ public class CollisionSystem extends EntitySystem {
 
     private EventBus eventBus;
 
-    public CollisionSystem(World world, CollisionListener listener, EventBus eventBus) {
+    public CollisionSystem(World world, EventBus eventBus) {
         this.world = world;
-        this.listener = listener;
         this.eventBus = eventBus;
 
         bm = ComponentMapper.getFor(BoundsComponent.class);
@@ -107,7 +95,6 @@ public class CollisionSystem extends EntitySystem {
                         if (bobBounds.bounds.overlaps(platBounds.bounds)) {
                             // bobSystem.hitPlatform(bob);
                             eventBus.emit(GameEvents.HIT_PLATFORM, bob, new EventData());
-                            listener.jump();
                             if (rand.nextFloat() > 0.5f) {
                                 eventBus.emit(GameEvents.PLATEFORM_PULVERIZED, platform, new EventData());
                             }
@@ -127,7 +114,6 @@ public class CollisionSystem extends EntitySystem {
                         if (bobBounds.bounds.overlaps(springBounds.bounds)) {
                             eventBus.emit(GameEvents.HIT_SPRING, bob, new EventData());
                             // bobSystem.hitSpring(bob);
-                            listener.highJump();
                         }
                     }
                 }
@@ -142,7 +128,6 @@ public class CollisionSystem extends EntitySystem {
                 if (squirrelBounds.bounds.overlaps(bobBounds.bounds)) {
                     eventBus.emit(GameEvents.HIT_SQUIRREL, bob, new EventData());
                     // bobSystem.hitSquirrel(bob);
-                    listener.hit();
                 }
             }
 
@@ -153,7 +138,7 @@ public class CollisionSystem extends EntitySystem {
 
                 if (coinBounds.bounds.overlaps(bobBounds.bounds)) {
                     engine.removeEntity(coin);
-                    listener.coin();
+                    eventBus.emit(GameEvents.HIT_COIN, new EventData());
                     world.score += CoinComponent.SCORE;
                 }
             }

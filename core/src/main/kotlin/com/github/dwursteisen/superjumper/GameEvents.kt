@@ -16,6 +16,9 @@ object GameEvents {
     val HIT_SPRING = eventId++
 
     @JvmField
+    val HIT_COIN = eventId++
+
+    @JvmField
     val PLAYER_FALLEN = eventId++
 
     @JvmField
