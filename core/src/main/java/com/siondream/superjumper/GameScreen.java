@@ -31,6 +31,7 @@ import com.github.dwursteisen.superjumper.Assets;
 import com.github.dwursteisen.superjumper.Settings;
 import com.github.dwursteisen.superjumper.SuperJumper;
 import com.github.dwursteisen.superjumper.World;
+import com.github.dwursteisen.superjumper.systems.BobSystem;
 import com.github.dwursteisen.superjumper.systems.PlatformSystem;
 import com.siondream.superjumper.systems.*;
 import com.siondream.superjumper.systems.CollisionSystem.CollisionListener;
@@ -95,10 +96,9 @@ public class GameScreen extends ScreenAdapter {
 		world = new World(engine);
 
 		eventBus = new EventBus();
-		
-		engine.addSystem(new BobSystem(world));
+
+		engine.addSystem(new BobSystem(world, eventBus));
 		engine.addSystem(new SquirrelSystem());
-		//engine.addSystem(new PlatformSystem());
 		engine.addSystem(new PlatformSystem(eventBus));
 		engine.addSystem(new CameraSystem());
 		engine.addSystem(new BackgroundSystem());

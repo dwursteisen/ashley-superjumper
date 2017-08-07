@@ -4,12 +4,11 @@ import com.badlogic.ashley.core.ComponentMapper
 import com.badlogic.ashley.core.Entity
 import com.badlogic.ashley.core.Family
 import com.github.dwursteisen.libgdx.ashley.*
+import com.github.dwursteisen.superjumper.GameEvents
 import com.github.dwursteisen.superjumper.World
 import com.siondream.superjumper.components.MovementComponent
 import com.siondream.superjumper.components.PlatformComponent
 import com.siondream.superjumper.components.TransformComponent
-
-val PLATEFORM_TOUCH = 99
 
 class PlatformSystem(eventBus: EventBus) : StateMachineSystem(eventBus, Family.all(PlatformComponent::class.java,
         StateComponent::class.java,
@@ -51,7 +50,7 @@ class PlatformSystem(eventBus: EventBus) : StateMachineSystem(eventBus, Family.a
 
     override fun describeMachine() {
         startWith(STATE_NORMAL)
-        onState(STATE_NORMAL).on(PLATEFORM_TOUCH) { entity ->
+        onState(STATE_NORMAL).on(GameEvents.PLATEFORM_PULVERIZED) { entity ->
             go(STATE_PULVERIZING, entity)
         }
     }

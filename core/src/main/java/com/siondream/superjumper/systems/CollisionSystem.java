@@ -21,6 +21,7 @@ import com.badlogic.ashley.utils.ImmutableArray;
 import com.github.dwursteisen.libgdx.ashley.EventBus;
 import com.github.dwursteisen.libgdx.ashley.EventData;
 import com.github.dwursteisen.libgdx.ashley.StateComponent;
+import com.github.dwursteisen.superjumper.GameEvents;
 import com.github.dwursteisen.superjumper.World;
 import com.siondream.superjumper.components.*;
 
@@ -80,7 +81,6 @@ public class CollisionSystem extends EntitySystem {
 
     @Override
     public void update(float deltaTime) {
-        BobSystem bobSystem = engine.getSystem(BobSystem.class);
         for (int i = 0; i < bobs.size(); ++i) {
             Entity bob = bobs.get(i);
 
@@ -105,10 +105,11 @@ public class CollisionSystem extends EntitySystem {
                         BoundsComponent platBounds = bm.get(platform);
 
                         if (bobBounds.bounds.overlaps(platBounds.bounds)) {
-                            bobSystem.hitPlatform(bob);
+                            // bobSystem.hitPlatform(bob);
+                            eventBus.emit(GameEvents.HIT_PLATFORM, bob, new EventData());
                             listener.jump();
                             if (rand.nextFloat() > 0.5f) {
-                                eventBus.emit(99, platform, new EventData());
+                                eventBus.emit(GameEvents.PLATEFORM_PULVERIZED, platform, new EventData());
                             }
 
                             break;
@@ -124,7 +125,8 @@ public class CollisionSystem extends EntitySystem {
 
                     if (bobPos.pos.y > springPos.pos.y) {
                         if (bobBounds.bounds.overlaps(springBounds.bounds)) {
-                            bobSystem.hitSpring(bob);
+                            eventBus.emit(GameEvents.HIT_SPRING, bob, new EventData());
+                            // bobSystem.hitSpring(bob);
                             listener.highJump();
                         }
                     }
@@ -138,7 +140,8 @@ public class CollisionSystem extends EntitySystem {
                 BoundsComponent squirrelBounds = bm.get(squirrel);
 
                 if (squirrelBounds.bounds.overlaps(bobBounds.bounds)) {
-                    bobSystem.hitSquirrel(bob);
+                    eventBus.emit(GameEvents.HIT_SQUIRREL, bob, new EventData());
+                    // bobSystem.hitSquirrel(bob);
                     listener.hit();
                 }
             }
