@@ -31,10 +31,10 @@ import com.github.dwursteisen.superjumper.Assets;
 import com.github.dwursteisen.superjumper.Settings;
 import com.github.dwursteisen.superjumper.SuperJumper;
 import com.github.dwursteisen.superjumper.World;
-import com.github.dwursteisen.superjumper.systems.BobSystem;
-import com.github.dwursteisen.superjumper.systems.PlatformSystem;
-import com.siondream.superjumper.systems.*;
+import com.github.dwursteisen.superjumper.systems.*;
+import com.siondream.superjumper.systems.CollisionSystem;
 import com.siondream.superjumper.systems.CollisionSystem.CollisionListener;
+import com.siondream.superjumper.systems.RenderingSystem;
 
 public class GameScreen extends ScreenAdapter {
 	static final int GAME_READY = 0;
