@@ -50,7 +50,7 @@ class PlatformSystem(eventBus: EventBus) : StateMachineSystem(eventBus, Family.a
 
     override fun describeMachine() {
         startWith(STATE_NORMAL)
-        onState(STATE_NORMAL).on(GameEvents.PLATEFORM_PULVERIZED) { entity ->
+        onState(STATE_NORMAL).on(GameEvents.PLATEFORM_PULVERIZED) { entity, _ ->
             go(STATE_PULVERIZING, entity)
         }
     }

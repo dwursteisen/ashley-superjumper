@@ -40,7 +40,7 @@ class BobSystem(private val world: World, eventBus: EventBus) : StateMachineSyst
     override fun describeMachine() {
         val STATE_JUMP = object : EntityState() {
 
-            override fun enter(entity: Entity, machine: StateMachineSystem) {
+            override fun enter(entity: Entity, machine: StateMachineSystem, eventData: EventData) {
                 entity[sm].set(BobComponent.STATE_JUMP)
             }
 
@@ -60,7 +60,7 @@ class BobSystem(private val world: World, eventBus: EventBus) : StateMachineSyst
         }
         val STATE_FALL = object : EntityState() {
 
-            override fun enter(entity: Entity, machine: StateMachineSystem) {
+            override fun enter(entity: Entity, machine: StateMachineSystem, eventData: EventData) {
                 entity[sm].set(BobComponent.STATE_FALL)
             }
 
@@ -76,7 +76,7 @@ class BobSystem(private val world: World, eventBus: EventBus) : StateMachineSyst
 
 
         val STATE_HIT = object : EntityState() {
-            override fun enter(entity: Entity, machine: StateMachineSystem) {
+            override fun enter(entity: Entity, machine: StateMachineSystem, eventData: EventData) {
                 entity[sm].set(BobComponent.STATE_HIT)
             }
 
@@ -86,27 +86,27 @@ class BobSystem(private val world: World, eventBus: EventBus) : StateMachineSyst
         }
 
         startWith(STATE_FALL)
-        onState(STATE_FALL).on(GameEvents.HIT_PLATFORM) { entity ->
+        onState(STATE_FALL).on(GameEvents.HIT_PLATFORM) { entity, _ ->
             hitPlatform(entity)
             go(STATE_JUMP, entity)
         }
-        onState(STATE_FALL).on(GameEvents.HIT_SPRING) { entity ->
+        onState(STATE_FALL).on(GameEvents.HIT_SPRING) { entity, _ ->
             hitSpring(entity)
             go(STATE_JUMP, entity)
         }
-        onState(STATE_FALL).on(GameEvents.HIT_SQUIRREL) { entity ->
+        onState(STATE_FALL).on(GameEvents.HIT_SQUIRREL) { entity, _ ->
             hitSquirrel(entity)
             go(STATE_HIT, entity)
         }
-        onState(STATE_JUMP).on(GameEvents.HIT_PLATFORM) { entity ->
+        onState(STATE_JUMP).on(GameEvents.HIT_PLATFORM) { entity, _ ->
             hitPlatform(entity)
             go(STATE_JUMP, entity)
         }
-        onState(STATE_JUMP).on(GameEvents.HIT_SPRING) { entity ->
+        onState(STATE_JUMP).on(GameEvents.HIT_SPRING) { entity, _ ->
             hitSpring(entity)
             go(STATE_JUMP, entity)
         }
-        onState(STATE_JUMP).on(GameEvents.HIT_SQUIRREL) { entity ->
+        onState(STATE_JUMP).on(GameEvents.HIT_SQUIRREL) { entity, _ ->
             hitSquirrel(entity)
             go(STATE_HIT, entity)
         }
